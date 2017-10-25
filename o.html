@@ -20,58 +20,19 @@ background-color: rgb(204, 255, 255);
   </style>
 </head>
 <body>
-   
-   <script type="text/php">
-  
-<?php 
-session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=php-einfach', 'root', '');
- 
-if(isset($_GET['login'])) {
- $email = $_POST['email'];
- $passwort = $_POST['passwort'];
- 
- $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
- $result = $statement->execute(array('email' => $email));
- $user = $statement->fetch();
- 
- //Überprüfung des Passworts
- if ($user !== false && password_verify($passwort, $user['passwort'])) {
- $_SESSION['userid'] = $user['id'];
- die('Login erfolgreich. Weiter zu <a href="geheim.php">internen Bereich</a>');
- } else {
- $errorMessage = "E-Mail oder Passwort war ungültig<br>";
- }
- 
-}
-?>
- 
-<?php 
-if(isset($errorMessage)) {
- echo $errorMessage;
-}
-?>
-  </script>
-  
-<form action="?login=1" method="post">
-E-Mail:<br>
-<input type="email" size="40" maxlength="250" name="email"><br><br>
- 
-Dein Passwort:<br>
-<input type="password" size="40"  maxlength="250" name="passwort"><br>
- 
-<input type="submit" value="Abschicken">
-</form> 
+  
+   <div id="Login">
+<form method="POST" action="index.php">
+Benutzername: <input name="loginname"><br>
+Passwort: <input name="loginpasswort" type=password><br>
+<br>
+<input type=submit name=submit value="Einloggen">
+</form>
+</div>
     
 <h2>Conan :3</h2>
        
-    <div id="Box1">
-<img src="0f7190e1c8dde11cc861a6f6fc62ba4b.jpg" width="550" height="250"></a>
-</div>
-  
-     <div id="Box2">
-<img src="http://static1.comicvine.com/uploads/scale_super/11111/111111327/3278747-dc-detective-conan-17352255-857-933.jpg" width="400" height="215"></a>
-</div>
+   
     
 </body>
 </html>
