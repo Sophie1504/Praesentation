@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Skomy</title>
+
+
+</head>
+<body>
+<style type="text/c++">
+
+#include <iostream> 
+#include <time.h> 
+using namespace std; 
+  
+void Go (bool Field[20][40], char Inp, int &Done) 
+{ 
+    static int CurPosX=0; 
+    static int CurPosY=0; 
+    
+    if (Inp=='w') if (CurPosY>0) 
+    { 
+        Field[CurPosY][CurPosX]=false; 
+        CurPosY--; 
+        Field[CurPosY][CurPosX]=true; 
+        Done++; 
+    } 
+    if (Inp=='s') if (CurPosY<19) 
+    { 
+        Field[CurPosY][CurPosX]=false; 
+        CurPosY++; 
+        Field[CurPosY][CurPosX]=true; 
+        Done++; 
+    } 
+    if (Inp=='a') if (CurPosX>0) 
+    { 
+        Field[CurPosY][CurPosX]=false; 
+        CurPosX--; 
+        Field[CurPosY][CurPosX]=true; 
+        Done++; 
+    } 
+    if (Inp=='d') if (CurPosX<39) 
+    { 
+        Field[CurPosY][CurPosX]=false; 
+        CurPosX++; 
+        Field[CurPosY][CurPosX]=true; 
+        Done++; 
+    } 
+    if (Inp=='e') exit (0); 
+} 
+  
+int main() 
+{   
+    bool Field[20][40]; 
+    for (int i=0; i<20; i++) 
+        for (int x=0; x<40; x++) 
+            Field[i][x]=false; 
+    Field[0][0]=true; 
+    
+    char Inp; 
+    
+    cout << "Sie haben 2 Minuten, um alle Felder zu begehen!" << endl << endl; 
+    cout << "Zum Starten Taste drücken!" << endl; 
+    char dummy; 
+    cin >> dummy; 
+    
+    time_t Time=time (0); 
+    time_t Start=Time; 
+    time_t CurTime=0; 
+    int Done=0; 
+    
+    while (true) 
+    {   
+        
+        for (int i=0; i<20; i++) 
+        { 
+            for (int x=0; x<40; x++) 
+            { 
+                if (Field[i][x]) cout << '0'; 
+                else cout << '-'; 
+            } 
+            cout << endl; 
+        } 
+        
+        cin >> Inp; 
+        
+        Go (Field, Inp, Done); 
+        
+        Time+=time (0)-Time; 
+        CurTime=Time-Start; 
+        
+        cout << "Aktuelle Zeit: " << CurTime << endl; 
+        cout << "Begangene Felder: " << Done << endl; 
+        
+        if (CurTime>=120)   //Bescheissen gibts nicht 
+        { 
+            cout << endl << "Zeit abgelaufen!" << endl; 
+            if (Done==800) cout << "Sie haben gewonnen!!!!!"; 
+            else cout << "Sie haben verloren!"; 
+            return 0; 
+        } 
+        else if (Done==800) 
+        { 
+            cout << "Sie haben gewonnen!!!!!"; 
+            return 0; 
+        } 
+    } 
+}
+</style>
+
+</body>
+</html>
